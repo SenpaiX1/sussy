@@ -1,0 +1,136 @@
+/* Base styles and previous card styles assumed here */
+
+/* Container styling remains same */
+.card {
+  position: relative;
+  width: 320px;
+  padding: 2rem 2.5rem;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffffcc;
+  text-align: center;
+  overflow: visible; /* visible needed to show the glowing light around edges */
+  z-index: 0;
+}
+
+/* Bright animated light around card - use ::before */
+.card::before {
+  content: "";
+  position: absolute;
+  top: -3px;    /* slightly outside border for glow */
+  left: -3px;
+  width: calc(100% + 6px);
+  height: calc(100% + 6px);
+  border-radius: 1.25rem;
+  background: 
+    linear-gradient(
+      90deg, 
+      transparent, 
+      rgba(255, 255, 255, 0.9), 
+      transparent
+    );
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+  animation: light-move-around 3.5s linear infinite;
+  pointer-events: none;  /* so it doesn't block clicks */
+  z-index: 10;  /* above card content */
+
+  /* We'll clip and move this "stripe" around the edges */
+  background-size: 200% 100%;
+}
+
+/* Keyframes for moving the gradient highlight (glowing light) around the edges */
+@keyframes light-move-around {
+  0% {
+    clip-path: polygon(
+      0% 0%,  /* top-left */
+      100% 0%, /* top-right */
+      100% 5%, /* top edge highlight strip height - top right */
+      95% 5%,  
+      95% 95%, /* right edge */
+      100% 95%,
+      100% 100%, /* bottom-right */
+      0% 100%,   /* bottom-left */
+      0% 0%
+    );
+    transform: translate(0, 0) rotate(0deg);
+    background-position: 0% 50%;
+  }
+  25% {
+    clip-path: polygon(
+      95% 0%,
+      100% 0%, 
+      100% 100%, 
+      95% 100%, 
+      95% 95%, 
+      5% 95%,
+      5% 100%, 
+      0% 100%, 
+      0% 0%
+    );
+    transform: translate(calc(100% + 6px), 0) rotate(90deg);
+    background-position: 50% 50%;
+  }
+  50% {
+    clip-path: polygon(
+      100% 95%, 
+      100% 100%, 
+      0% 100%, 
+      0% 95%, 
+      5% 95%, 
+      5% 5%,
+      0% 5%, 
+      0% 0%, 
+      100% 0%
+    );
+    transform: translate(calc(100% + 6px), calc(100% + 6px)) rotate(180deg);
+    background-position: 100% 50%;
+  }
+  75% {
+    clip-path: polygon(
+      5% 0%, 
+      0% 0%, 
+      0% 100%, 
+      5% 100%, 
+      5% 5%, 
+      95% 5%, 
+      95% 0%, 
+      100% 0%, 
+      100% 100%
+    );
+    transform: translate(0, calc(100% + 6px)) rotate(270deg);
+    background-position: 150% 50%;
+  }
+  100% {
+    clip-path: polygon(
+      0% 0%, 
+      100% 0%, 
+      100% 5%, 
+      95% 5%, 
+      95% 95%, 
+      100% 95%, 
+      100% 100%, 
+      0% 100%, 
+      0% 0%
+    );
+    transform: translate(0, 0) rotate(0deg);
+    background-position: 0% 50%;
+  }
+}
+
+/* Optional: smooth text for the heading */
+.card h1 {
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+}
+
+
+
+/* The shiny button from previous snippet with gloss on hover */
+/* You can reuse previous button styles or define your own here */
